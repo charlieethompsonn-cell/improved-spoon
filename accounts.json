@@ -1,0 +1,14 @@
+{
+  "accounts": [
+    {
+      "id": "personal",
+      "email": "charliee.thompsonn@gmail.com",
+      "label": "Personal"
+    },
+    {
+      "id": "office",
+      "email": "office.thompsonworks@gmail.com",
+      "label": "Office"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "improved-spoon",
+  "version": "0.1.0",
+  "description": "Link and manage multiple Gmail accounts via OAuth 2.0.",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "gmail-link": "src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "auth": "node src/index.js auth",
+    "status": "node src/index.js status",
+    "list": "node src/index.js list"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "open": "^10.1.0"
+  }
+}
