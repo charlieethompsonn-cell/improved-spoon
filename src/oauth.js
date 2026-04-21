@@ -42,6 +42,14 @@ export async function authorizeAccount(account) {
   return profile.data.email;
 }
 
+const LOOPBACK_HOST = "127.0.0.1";
+
+function isLoopbackAddress(address) {
+  if (!address) return false;
+  if (address === "::1" || address === "127.0.0.1") return true;
+  return address.startsWith("::ffff:127.");
+}
+
 function waitForAuthCode(authUrl) {
   const { redirectUri } = oauthClientConfig();
   const parsed = new URL(redirectUri);
@@ -50,6 +58,12 @@ function waitForAuthCode(authUrl) {
   return new Promise((resolvePromise, rejectPromise) => {
     const server = http.createServer((req, res) => {
       try {
+        if (!isLoopbackAddress(req.socket.remoteAddress)) {
+          res.writeHead(403, { "Content-Type": "text/plain" });
+          res.end("Forbidden: remote connections are not allowed.");
+          return;
+        }
+
         const url = new URL(req.url, redirectUri);
         if (url.pathname !== parsed.pathname) {
           res.writeHead(404);
@@ -73,8 +87,16 @@ function waitForAuthCode(authUrl) {
       }
     });
 
-    server.listen(port, () => {
-      console.log(`Opening browser for consent. Listening on ${redirectUri}`);
+    server.on("connection", (socket) => {
+      if (!isLoopbackAddress(socket.remoteAddress)) {
+        socket.destroy();
+      }
+    });
+
+    server.listen(port, LOOPBACK_HOST, () => {
+      console.log(
+        `Opening browser for consent. Listening on ${redirectUri} (loopback only)`,
+      );
       open(authUrl).catch(() => {
         console.log(`If the browser did not open, visit:\n${authUrl}`);
       });
