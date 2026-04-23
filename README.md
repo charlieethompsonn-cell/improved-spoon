@@ -16,6 +16,16 @@ Pre-configured for:
    `GOOGLE_CLIENT_SECRET`.
 3. `npm install`.
 
+### One-line install (Windows / PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/charlieethompsonn-cell/improved-spoon/main/install.ps1 | iex
+```
+
+Clones the repo to `%USERPROFILE%\improved-spoon` (override with
+`$env:SPOON_HOME`), runs `npm install`, and seeds `.env` from `.env.example`.
+Requires Git and Node.js 18+ on `PATH`.
+
 ## Usage
 
 ```
