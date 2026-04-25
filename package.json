@@ -12,7 +12,8 @@
     "start": "node src/index.js",
     "auth": "node src/index.js auth",
     "status": "node src/index.js status",
-    "list": "node src/index.js list"
+    "list": "node src/index.js list",
+    "signins": "node src/index.js signins"
   },
   "engines": {
     "node": ">=18"
